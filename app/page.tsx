@@ -19,7 +19,7 @@ export default function Home() {
       getNextPageParam: (lastPage) => {
         if (!lastPage.next) return undefined;
         const url = new URL(lastPage.next);
-        const next = url.searchParams.get("offset")
+        const next = url.searchParams.get("offset");
         return Number(next);
       },
     });
@@ -34,12 +34,13 @@ export default function Home() {
       <div className="sm:mx-40 mx-10 mt-8 grid lg:grid-cols-5 md:grid-cols-4  sm:grid-cols-2  gap-4">
         {data?.pages.map((page, pageIndex) =>
           page.results.map((pokemon: { name: string }, index: number) => {
-            // console.log(page);
-            return <Card
-              key={`${pokemon.name}-${pageIndex}`}
-              id={pageIndex * 50 + index + 1}
-              name={pokemon.name}
-            />;
+            return (
+              <Card
+                key={`${pokemon.name}-${pageIndex}`}
+                id={pageIndex * 50 + index + 1}
+                name={pokemon.name}
+              />
+            );
           }),
         )}
       </div>

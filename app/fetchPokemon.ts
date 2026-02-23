@@ -1,6 +1,6 @@
-async function fetchPokemon({ offset }: { offset: number }) {
+async function fetchPokemon({ offset = 0 }: { offset: number }) {
   console.log(offset);
-  
+
   const res = await fetch(
     "https://pokeapi.co/api/v2/pokemon?limit=50&offset=" + offset,
   );
@@ -11,7 +11,7 @@ async function fetchPokemon({ offset }: { offset: number }) {
   return data;
 }
 
-async function fetchPokemonById(id: number) {
+async function fetchPokemonById(id: string | undefined) {
   const res = await fetch("https://pokeapi.co/api/v2/pokemon/" + id);
   if (!res.ok) {
     throw new Error("Data not Found");

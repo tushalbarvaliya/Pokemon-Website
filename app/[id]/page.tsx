@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { fetchPokemonById } from "../fetchPokemon";
@@ -11,12 +11,21 @@ import Type from "@/components/UI/Type";
 const page: React.FC = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { id } = useParams();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data } = useQuery({
     queryKey: [`${id}`],
-    queryFn: () => fetchPokemonById(id),
+    queryFn: () => fetchPokemonById(String(id)),
   });
   const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
 
+  const [src,Setsrc] = useState('/heart-outline.svg')
+  function handelFav(){
+    if(src=='/heart-outline.svg'){
+      Setsrc('/heart-fill.svg')
+    }else{
+      Setsrc('/heart-outline.svg')
+    }    
+  }
   return (
     <>
       <h1 className="capitalize text-2xl font-semibold px-4">{data?.name}</h1>
@@ -24,6 +33,9 @@ const page: React.FC = () => {
         {data?.types.map((type) => {
           return <Type key={type.type.name} name={type.type.name} />;
         })}
+        <div className="flex items-center" onClick={handelFav}>
+          <Image src={src} width={30} height={30} alt="heart" />
+        </div>
       </div>
       <div className="flex px-4">
         <div className="w-full grid grid-cols-8  gap-3">

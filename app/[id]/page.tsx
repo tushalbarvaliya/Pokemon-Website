@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { fetchPokemonById } from "../fetchPokemon";
@@ -31,25 +31,30 @@ const page: FC = () => {
   }
   return (
     <>
+      {/* Name Of Pokemon */}
       <h1 className="capitalize text-2xl font-semibold px-4">{data?.name}</h1>
+      {/* Type of Pokemon */}
       <div className="flex gap-2 px-4 my-2">
         {data?.types.map(
           (type: { slot: number; type: { name: string; url: string } }) => {
             return <Type key={type.type.name} name={type.type.name} />;
           },
         )}
+        {/* Fav icon */}
         <div className="flex items-center" onClick={handelFav}>
           <Image src={src} width={30} height={30} alt="heart" />
         </div>
       </div>
-      <div className="flex px-4">
-        <div className="w-full grid grid-cols-8  gap-3">
+
+      {/* Pokemon Details  */}
+      <div className="flex md:flex-row flex-col-reverse p-4">
+        <div className="w-full grid lg:grid-cols-5 grid-cols-3  gap-3">
           <SmallCard text={"name"} value={data?.name}></SmallCard>
           <SmallCard
             text={"base experience"}
             value={data?.base_experience}
           ></SmallCard>
-          <SmallCard text={"Height"} value={data?.height}></SmallCard>
+          {/* <SmallCard text={"Height"} value={data?.height}></SmallCard> */}
           <SmallCard text={"weight"} value={`${data?.weight} Kg`}></SmallCard>
           {data?.stats.map(
             (state: {
@@ -66,17 +71,18 @@ const page: FC = () => {
               );
             },
           )}
-          <div className="col-start-6 row-start-1 row-span-2 col-span-3 flex justify-center">
-            <Image
-              src={url}
-              width={400}
-              height={400}
-              alt="pokemon Image"
-              className=""
-            ></Image>
-          </div>
+        </div>
+        <div className="w-full lg:w-1/2 flex justify-center items-center mb-4">
+          <Image
+            src={url}
+            width={400}
+            height={400}
+            alt="pokemon Image"
+            className=""
+          ></Image>
         </div>
       </div>
+
     </>
   );
 };

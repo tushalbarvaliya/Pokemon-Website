@@ -1,11 +1,12 @@
 "use client";
 
-import Card from "@/components/Card";
-import Button from "@/components/UI/Button";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchPokemon } from "./fetchPokemon";
 import { useInView } from "motion/react";
 import { useEffect, useRef } from "react";
+
+import Card from "@/components/Card";
+import Button from "@/components/UI/Button";
 
 export default function Home() {
   const ref = useRef(null);

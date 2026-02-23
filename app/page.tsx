@@ -23,7 +23,6 @@ export default function Home() {
       },
     });
   useEffect(() => {
-    // console.log("Element is in view: ", isInView);
     if(isInView){
       fetchNextPage();
     }

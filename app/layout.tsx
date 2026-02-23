@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import QueryProvider from "@/components/QueryProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,10 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Header></Header>
-        {children}
-      </body>
+      <QueryProvider>
+        <body>
+          <Header></Header>
+          {children}
+        </body>
+      </QueryProvider>
     </html>
   );
 }

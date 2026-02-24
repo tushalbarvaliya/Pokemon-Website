@@ -18,7 +18,6 @@ const Page: React.FC = () => {
 
   const favorite = useSelector((state: RootState) => state.counter.favorite);
 
-
   const numericId = Number(id);
 
   const { data } = useQuery({

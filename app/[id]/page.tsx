@@ -1,20 +1,24 @@
 "use client";
 
-import { FC, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { fetchPokemonById } from "../fetchPokemon";
+import { useDispatch, useSelector } from "react-redux";
 
 import Image from "next/image";
 import SmallCard from "@/components/UI/SmallCard";
 import Type from "@/components/UI/Type";
+import type { RootState, AppDispatch } from "@/app/store/store";
+import { add, remove } from "../store/features/favorite";
 
-const page: FC = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+const Page:React.FC = () => {
+  const count = useSelector((state: RootState) => state.counter.favorite);
+  const dispatch = useDispatch<AppDispatch>();
+
+  console.log(count);
   const [src, setSrc] = useState("/heart-outline.svg");
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { id } = useParams();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data } = useQuery({
     queryKey: [`${id}`],
     queryFn: () => fetchPokemonById(String(id)),
@@ -24,8 +28,10 @@ const page: FC = () => {
   // for fav icon change per click
   function handelFav() {
     if (src == "/heart-outline.svg") {
+      dispatch(add({ id: id, name: data?.name }));
       setSrc("/heart-fill.svg");
     } else {
+      dispatch(remove({id}))
       setSrc("/heart-outline.svg");
     }
   }
@@ -82,9 +88,8 @@ const page: FC = () => {
           ></Image>
         </div>
       </div>
-
     </>
   );
 };
 
-export default page;
+export default Page;

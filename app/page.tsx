@@ -9,6 +9,8 @@ import Card from "@/components/Card";
 import Button from "@/components/UI/Button";
 
 export default function Home() {
+
+  
   const ref = useRef(null);
   const isInView = useInView(ref);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =

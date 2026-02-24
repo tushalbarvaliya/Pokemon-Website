@@ -7,10 +7,10 @@ const Button = ({
   ref,
   ...props
 }: {
-  children: React.ReactNode;
-  onClick: () => void;
-  disabled: boolean;
-  ref: Ref<HTMLButtonElement>;
+  children: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  ref?: Ref<HTMLButtonElement>;
 }) => {
   return (
     <button

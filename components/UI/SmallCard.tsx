@@ -1,5 +1,3 @@
-import React from "react";
-
 const SmallCard = ({
   text,
   value,
@@ -12,7 +10,7 @@ const SmallCard = ({
       <h1 className="text-center capitalize font-bold bg-stone-800 text-stone-50 rounded-t-2xl py-2">
         {text}
       </h1>
-      <div className="flex justify-center items-center  text-2xl capitalize h-30">
+      <div className="flex justify-center items-center  text-xl capitalize h-30">
         {value}
       </div>
     </div>

@@ -1,91 +1,103 @@
 "use client";
 
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { fetchPokemonById } from "../fetchPokemon";
 import { useDispatch, useSelector } from "react-redux";
-
 import Image from "next/image";
+
+import { fetchPokemonById } from "../fetchPokemon";
 import SmallCard from "@/components/UI/SmallCard";
 import Type from "@/components/UI/Type";
+
 import type { RootState, AppDispatch } from "@/app/store/store";
 import { add, remove } from "../store/features/favorite";
 
 const Page: React.FC = () => {
-  const favorite = useSelector((state: RootState) => state.counter.favorite);
+  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log(favorite);
-  const [src, setSrc] = useState("/heart-outline.svg");
-  const { id } = useParams();
-  const { data } = useQuery({
-    queryKey: [`${id}`],
-    queryFn: () => fetchPokemonById(String(id)),
-  });
-  const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
+  const favorite = useSelector((state: RootState) => state.counter.favorite);
 
-  // for fav icon change per click
-  const isFav = favorite.find((item) => item.id === Number(id));
-  function handelFav() {
-    if (src == "/heart-outline.svg" && !isFav) {
-      dispatch(add({ id: id, name: data?.name }));
-      setSrc("/heart-fill.svg");
+  console.log(favorite);
+
+  const numericId = Number(id);
+
+  const { data } = useQuery({
+    queryKey: ["pokemon", numericId],
+    queryFn: () => fetchPokemonById(String(numericId)),
+    enabled: !Number.isNaN(numericId),
+  });
+
+  const isFav = favorite.some((item) => item.id === numericId);
+
+  const heartSrc = isFav ? "/heart-fill.svg" : "/heart-outline.svg";
+
+  const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${numericId}.png`;
+
+  function handleFav() {
+    if (!data) return;
+
+    if (isFav) {
+      dispatch(remove({ id: numericId }));
     } else {
-      dispatch(remove({ id }));
-      setSrc("/heart-outline.svg");
+      dispatch(
+        add({
+          id: numericId,
+          name: data.name,
+          image: imageUrl,
+          base_experience: data?.base_experience,
+          weight: data?.weight,
+          stats: data?.stats,
+          types: data?.types,
+        }),
+      );
     }
   }
+
   return (
     <>
-      {/* Name Of Pokemon */}
+      {/* Pokemon Name */}
       <h1 className="capitalize text-2xl font-semibold px-4">{data?.name}</h1>
-      {/* Type of Pokemon */}
-      <div className="flex gap-2 px-4 my-2">
+
+      {/* Types + Favorite */}
+      <div className="flex gap-2 px-4 my-2 items-center">
         {data?.types.map(
-          (type: { slot: number; type: { name: string; url: string } }) => {
-            return <Type key={type.type.name} name={type.type.name} />;
-          },
+          (type: { slot: number; type: { name: string; url: string } }) => (
+            <Type key={type.type.name} name={type.type.name} />
+          ),
         )}
-        {/* Fav icon */}
-        <div className="flex items-center" onClick={handelFav}>
-          <Image src={src} width={30} height={30} alt="heart" />
-        </div>
+
+        <button onClick={handleFav} aria-label="Add to favorites">
+          <Image src={heartSrc} width={30} height={30} alt="favorite" />
+        </button>
       </div>
 
-      {/* Pokemon Details  */}
+      {/* Pokemon Details */}
       <div className="flex md:flex-row flex-col-reverse p-4">
-        <div className="pokemon w-full grid lg:grid-cols-5   gap-3">
-          <SmallCard text={"name"} value={data?.name}></SmallCard>
-          <SmallCard
-            text={"base experience"}
-            value={data?.base_experience}
-          ></SmallCard>
-          <SmallCard text={"weight"} value={`${data?.weight} Kg`}></SmallCard>
+        <div className="pokemon w-full gap-3">
+          <SmallCard text="name" value={data?.name} />
+          <SmallCard text="base experience" value={data?.base_experience} />
+          <SmallCard text="weight" value={`${data?.weight} Kg`} />
+
           {data?.stats.map(
-            (state: {
-              base_stat: number;
-              effort: number;
-              stat: { name: string; url: string };
-            }) => {
-              return (
-                <SmallCard
-                  text={state.stat.name}
-                  value={state.base_stat}
-                  key={state.stat.name}
-                />
-              );
-            },
+            (stat: { base_stat: number; stat: { name: string } }) => (
+              <SmallCard
+                key={stat.stat.name}
+                text={stat.stat.name}
+                value={stat.base_stat}
+              />
+            ),
           )}
         </div>
+
         <div className="w-full lg:w-1/2 flex justify-center items-start mb-4">
           <Image
-            src={url}
+            src={imageUrl}
             width={400}
             height={400}
-            alt="pokemon Image"
-            className=""
-          ></Image>
+            alt="Pokemon"
+            priority
+          />
         </div>
       </div>
     </>

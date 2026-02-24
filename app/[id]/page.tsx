@@ -55,13 +55,12 @@ const Page: React.FC = () => {
 
       {/* Pokemon Details  */}
       <div className="flex md:flex-row flex-col-reverse p-4">
-        <div className="w-full grid lg:grid-cols-5 grid-cols-3  gap-3">
+        <div className="pokemon w-full grid lg:grid-cols-5   gap-3">
           <SmallCard text={"name"} value={data?.name}></SmallCard>
           <SmallCard
             text={"base experience"}
             value={data?.base_experience}
           ></SmallCard>
-          {/* <SmallCard text={"Height"} value={data?.height}></SmallCard> */}
           <SmallCard text={"weight"} value={`${data?.weight} Kg`}></SmallCard>
           {data?.stats.map(
             (state: {
@@ -79,7 +78,7 @@ const Page: React.FC = () => {
             },
           )}
         </div>
-        <div className="w-full lg:w-1/2 flex justify-center items-center mb-4">
+        <div className="w-full lg:w-1/2 flex justify-center items-start mb-4">
           <Image
             src={url}
             width={400}

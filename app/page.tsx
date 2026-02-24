@@ -7,7 +7,6 @@ import { useEffect, useRef } from "react";
 
 import Card from "@/components/Card";
 import Button from "@/components/UI/Button";
-import { div } from "motion/react-client";
 
 export default function Home() {
   const ref = useRef(null);

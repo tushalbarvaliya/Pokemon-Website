@@ -2,7 +2,7 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+
 const Card = ({ id, name }: { id: string | number; name: string }) => {
   const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
   return (

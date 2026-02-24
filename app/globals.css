@@ -1,31 +1,63 @@
 @import "tailwindcss";
 
 @layer utilities {
+  /* home page responsive. */
   .loadPokemon {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  @media (max-width: 1339px) {
+  @media (max-width: 1200px) {
     .loadPokemon {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
-
-  @media (max-width: 1159px) {
+  @media (max-width: 890px) {
     .loadPokemon {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 939px) {
+  @media (max-width: 668px) {
     .loadPokemon {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-
-  @media (max-width: 722px) {
+  @media (max-width: 490px) {
     .loadPokemon {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+
+  /* pokemon details page responsive */
+  
+  @media (max-width: 1080px) {
+    .pokemon {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 1025px) {
+    .pokemon {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 970px) {
+    .pokemon {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 767px) {
+    .pokemon {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 566px) {
+    .pokemon {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 400px) {
+    .pokemon {
       grid-template-columns: repeat(1, minmax(0, 1fr));
     }
   }

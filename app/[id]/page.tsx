@@ -19,7 +19,7 @@ const page: FC = () => {
     queryKey: [`${id}`],
     queryFn: () => fetchPokemonById(String(id)),
   });
-  const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
+  const url = `${data?.sprites.other.home.front_default}`;
 
   // for fav icon change per click
   function handelFav() {
@@ -28,6 +28,10 @@ const page: FC = () => {
     } else {
       setSrc("/heart-outline.svg");
     }
+  }
+
+  if(!data){
+    return <h1 className="text-center font-bold text-3xl mt-20">Data Not Found</h1>
   }
   return (
     <>
@@ -73,16 +77,17 @@ const page: FC = () => {
           )}
         </div>
         <div className="w-full lg:w-1/2 flex justify-center items-center mb-4">
-          <Image
-            src={url}
-            width={400}
-            height={400}
-            alt="pokemon Image"
-            className=""
-          ></Image>
+          {data && (
+            <Image
+              src={url}
+              width={400}
+              height={400}
+              alt="pokemon Image"
+              className=""
+            ></Image>
+          )}
         </div>
       </div>
-
     </>
   );
 };

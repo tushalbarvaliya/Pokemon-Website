@@ -12,11 +12,11 @@ import Type from "@/components/UI/Type";
 import type { RootState, AppDispatch } from "@/app/store/store";
 import { add, remove } from "../store/features/favorite";
 
-const Page:React.FC = () => {
-  const count = useSelector((state: RootState) => state.counter.favorite);
+const Page: React.FC = () => {
+  const favorite = useSelector((state: RootState) => state.counter.favorite);
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log(count);
+  console.log(favorite);
   const [src, setSrc] = useState("/heart-outline.svg");
   const { id } = useParams();
   const { data } = useQuery({
@@ -26,12 +26,13 @@ const Page:React.FC = () => {
   const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
 
   // for fav icon change per click
+  const isFav = favorite.find((item) => item.id === Number(id));
   function handelFav() {
-    if (src == "/heart-outline.svg") {
+    if (src == "/heart-outline.svg" && !isFav) {
       dispatch(add({ id: id, name: data?.name }));
       setSrc("/heart-fill.svg");
     } else {
-      dispatch(remove({id}))
+      dispatch(remove({ id }));
       setSrc("/heart-outline.svg");
     }
   }

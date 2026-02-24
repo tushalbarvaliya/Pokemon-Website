@@ -1,5 +1,5 @@
 async function fetchPokemon({ pageParam = 0 }: { pageParam: number }) {
-  console.log(pageParam);
+  // console.log(pageParam);
 
   const res = await fetch(
     "https://pokeapi.co/api/v2/pokemon?limit=50&offset=" + pageParam,

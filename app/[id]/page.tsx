@@ -18,7 +18,6 @@ const Page: React.FC = () => {
 
   const favorite = useSelector((state: RootState) => state.counter.favorite);
 
-  console.log(favorite);
 
   const numericId = Number(id);
 
@@ -57,7 +56,7 @@ const Page: React.FC = () => {
   return (
     <>
       {/* Pokemon Name */}
-      <h1 className="capitalize text-2xl font-semibold px-4">{data?.name}</h1>
+      <h1 className="capitalize text-4xl font-semibold px-4">{data?.name}</h1>
 
       {/* Types + Favorite */}
       <div className="flex gap-2 px-4 my-2 items-center">

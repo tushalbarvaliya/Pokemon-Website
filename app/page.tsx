@@ -7,10 +7,9 @@ import { useEffect, useRef } from "react";
 
 import Card from "@/components/Card";
 import Button from "@/components/UI/Button";
+import { div } from "motion/react-client";
 
 export default function Home() {
-
-  
   const ref = useRef(null);
   const isInView = useInView(ref);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -33,18 +32,18 @@ export default function Home() {
 
   return (
     <>
-      <div className="sm:mx-40 mx-10 mt-8 grid lg:grid-cols-5 md:grid-cols-4  sm:grid-cols-2  gap-4">
-        {data?.pages.map((page, pageIndex) =>
-          page.results.map((pokemon: { name: string }, index: number) => {
-            return (
-              <Card
-                key={`${pokemon.name}-${pageIndex}`}
-                id={pageIndex * 50 + index + 1}
-                name={pokemon.name}
-              />
-            );
-          }),
-        )}
+      <div className="flex justify-center items-center p-4">
+        <div className="loadPokemon   grid grid-cols-5  gap-4">
+          {data?.pages.map((page, pageIndex) =>
+            page.results.map((pokemon: { name: string }, index: number) => {
+              return (
+                <div key={`${pokemon.name}-${pageIndex}`}>
+                  <Card id={pageIndex * 50 + index + 1} name={pokemon.name} />
+                </div>
+              );
+            }),
+          )}
+        </div>
       </div>
 
       <div className="flex justify-center mt-10">

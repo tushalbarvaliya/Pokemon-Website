@@ -23,8 +23,7 @@ const Type = ({ name }: { name: string }) => {
     Water: "#6390F0",
   };
   // bg-[${typeColor[name]}]
-  const classes = ` px-4 py-2 font-semibold text-stone-50 capitalize`;
-
+  const classes = ` px-4 py-2 font-semibold text-stone-50 capitalize shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]`;
   return (
     <div className={classes} style={{ backgroundColor: typeColor[name] }}>
       {name}

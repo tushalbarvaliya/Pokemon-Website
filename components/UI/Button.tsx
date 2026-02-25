@@ -1,5 +1,5 @@
+import { motion } from "motion/react";
 import React, { Ref } from "react";
-
 const Button = ({
   children,
   onClick,
@@ -13,15 +13,16 @@ const Button = ({
   type?: 'button'|'reset'|'submit';
 }) => {
   return (
-    <button
+    <motion.button
       className="bg-amber-400 px-4 py-2 font-semibold text-white rounded hover:bg-amber-500"
       onClick={onClick}
       ref={ref}
       type={type}
       {...props}
+      whileHover={{scale:1.05}}
     >
       {children}
-    </button>
+    </motion.button>
   );
 };
 

@@ -2,16 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import pokemonLogo from "@/public/pokedex.png";
 import Button from "./UI/Button";
-import { rgba } from "motion";
 
 const Header: React.FC = () => {
   const [search, setSearch] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
+  const [toggleMenu, setToggleMenu] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -25,6 +25,11 @@ const Header: React.FC = () => {
     router.push(`/?search=${search}`);
   }, [debouncedValue]);
 
+  function handelMenu() {
+    setToggleMenu((prev) => !prev);
+  }
+  console.log(toggleMenu);
+
   return (
     <>
       <header className="bg-stone-50  shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] sticky w-full z-50 top-0 ">
@@ -35,11 +40,11 @@ const Header: React.FC = () => {
             <Link href="/">
               <Image src={pokemonLogo} alt="pokemon logo" width={150} />
             </Link>
-            <Link href="/favorite">
-              <Button type="button">Favorite</Button>
-            </Link>
-            <Link href="/">
+            <Link href="/" className="homeLink">
               <Button type="button">Home</Button>
+            </Link>
+            <Link href="/favorite" className="favoriteLink">
+              <Button type="button">Favorite</Button>
             </Link>
           </div>
 
@@ -61,6 +66,38 @@ const Header: React.FC = () => {
               id="search"
               onChange={(e) => setSearch(e.target.value)}
             />
+          </div>
+          <Image
+            src={"/bars-solid-full.svg"}
+            alt="menu"
+            height={40}
+            width={40}
+            className="bar hidden"
+            onClick={handelMenu}
+          />
+        </nav>
+        <nav
+          className="w-screen h-screen translate-px absolute z-60 right-0 top-0"
+          style={{ display: toggleMenu ? "block" : "none" }}
+        >
+          <div className="h-full w-60 bg-white ml-auto flex flex-col gap-4">
+            <div className="ml-auto mt-4" onClick={handelMenu}>
+              <Image src={"/x.svg"} alt="close" width={30} height={10}></Image>
+            </div>
+            <Link href="/">
+              <div className=" bg-amber-400 flex justify-center" onClick={handelMenu}>
+                <button type="button" className="py-2 font-bold text-white">
+                  Home
+                </button>
+              </div>
+            </Link>
+            <Link href="/favorite">
+              <div className=" bg-amber-400 flex justify-center" onClick={handelMenu}>
+                <button type="button" className="py-2 font-bold text-white">
+                  Favorite
+                </button>
+              </div>
+            </Link>
           </div>
         </nav>
       </header>

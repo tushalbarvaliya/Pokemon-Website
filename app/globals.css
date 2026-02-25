@@ -64,4 +64,20 @@
       grid-template-columns: repeat(1, minmax(0, 1fr));
     }
   }
+
+  /* For Bar menu */
+  @media (max-width:890px){
+    .homeLink{
+      display: none;
+    }
+    .favoriteLink{
+      display: none;
+    }
+    .bar{
+      display: block;
+    }
+  }
+
+
+
 }

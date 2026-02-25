@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
 import Card from "@/components/Card";
+import SkeletonCard from "@/components/skeleton/SkeletonCard";
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -51,7 +52,22 @@ export default function Home() {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
   // use to filter data based on search.
   const fetchData = data;
+  const array = Array.from({ length: 25 }, (_, i) => i + 1);
+  console.log(array);
 
+  if (!fetchData) {
+    return (
+      <>
+        <div className="flex justify-center items-center p-4 mt-4">
+          <div className="loadPokemon grid grid-cols-5  gap-8">
+            {array.map((num) => {
+              return <SkeletonCard key={num} />;
+            })}
+          </div>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div className="flex justify-center items-center p-4 mt-4">
@@ -81,14 +97,21 @@ export default function Home() {
                 );
               }),
             )}
+          {hasNextPage && (
+            <>
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </>
+          )}
         </div>
       </div>
-
-      {hasNextPage && (
-        <div ref={loadMoreRef} className="h-10 flex justify-center font-bold">
-          Loading...
-        </div>
-      )}
+      <div
+        ref={loadMoreRef}
+        className="mt-4 h-10 loadPokemon grid grid-cols-5  gap-8 font-bold "
+      ></div>
     </>
   );
 }

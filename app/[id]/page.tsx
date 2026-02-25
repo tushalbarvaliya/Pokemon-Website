@@ -21,7 +21,7 @@ const Page: React.FC = () => {
   const favorite = useSelector((state: RootState) => state.counter.favorite);
   const numericId = Number(id);
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["pokemon", numericId],
     queryFn: () => fetchPokemonById(String(numericId)),
     enabled: !Number.isNaN(numericId),
@@ -99,7 +99,7 @@ const Page: React.FC = () => {
 
             <div className="w-full lg:w-1/2 flex justify-center items-start mb-4 ">
               <Image
-                src={imageUrl}
+                src={data.sprites.other.home.front_default}
                 width={400}
                 height={400}
                 alt="Pokemon"

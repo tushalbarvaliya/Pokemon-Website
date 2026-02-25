@@ -1,7 +1,6 @@
 async function fetchPokemon({ pageParam = 0 }: { pageParam: number }) {
-
   const res = await fetch(
-    "https://pokeapi.co/api/v2/pokemon?limit=50&offset=" + pageParam,
+    "https://pokeapi.co/api/v2/pokemon?limit=25&offset=" + pageParam,
   );
   if (!res.ok) {
     throw new Error("Data not Found");

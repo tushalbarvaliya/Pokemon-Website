@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import pokemonLogo from "@/public/pokedex.png";
@@ -28,7 +28,6 @@ const Header: React.FC = () => {
   function handelMenu() {
     setToggleMenu((prev) => !prev);
   }
-  console.log(toggleMenu);
 
   return (
     <>

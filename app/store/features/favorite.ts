@@ -4,10 +4,10 @@ type fav = {
   id: number;
   name: string;
   image: string;
-  base_experience: unknown;
-  weight: unknown;
-  stats: unknown;
-  types: unknown;
+  base_experience: [];
+  weight: string;
+  stats: [];
+  types: [];
 };
 
 interface CounterState {
@@ -23,15 +23,7 @@ const counterSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      const r: fav = {
-        id: action.payload.id,
-        name: action.payload.name,
-        image: action.payload.image,
-        base_experience: action.payload.base_experience,
-        weight: action.payload.weight,
-        stats: action.payload.stats,
-        types: action.payload.types,
-      };
+      const r: fav = action.payload;
       state.favorite = [r, ...state.favorite];
     },
     remove: (state, action) => {

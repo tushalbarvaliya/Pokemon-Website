@@ -1,16 +1,17 @@
 import { motion } from "motion/react";
-import React, { Ref } from "react";
+import { Ref } from "react";
+
 const Button = ({
   children,
   onClick,
   ref,
-  type='button',
+  type = "button",
   ...props
 }: {
   children: string;
   onClick?: () => void;
   ref?: Ref<HTMLButtonElement>;
-  type?: 'button'|'reset'|'submit';
+  type?: "button" | "reset" | "submit";
 }) => {
   return (
     <motion.button
@@ -19,7 +20,7 @@ const Button = ({
       ref={ref}
       type={type}
       {...props}
-      whileHover={{scale:1.05}}
+      whileHover={{ scale: 1.05 }}
     >
       {children}
     </motion.button>

@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "motion/react";
 import Image from "next/image";
 
 import { fetchPokemonById } from "../fetchPokemon";
@@ -65,14 +66,14 @@ const Page: React.FC = () => {
           ),
         )}
 
-        <button onClick={handleFav} aria-label="Add to favorites">
+        <motion.button whileHover={{scale:1.2}} initial={{cursor:"pointer"}} onClick={handleFav} aria-label="Add to favorites">
           <Image src={heartSrc} width={30} height={30} alt="favorite" />
-        </button>
+        </motion.button>
       </div>
 
       {/* Pokemon Details */}
       <div className="flex md:flex-row flex-col-reverse p-4">
-        <div className="pokemon w-full gap-3">
+        <div className="pokemon w-full gap-8">
           <SmallCard text="name" value={data?.name} />
           <SmallCard text="base experience" value={data?.base_experience} />
           <SmallCard text="weight" value={`${data?.weight} Kg`} />
@@ -88,7 +89,7 @@ const Page: React.FC = () => {
           )}
         </div>
 
-        <div className="w-full lg:w-1/2 flex justify-center items-start mb-4">
+        <div className="w-full lg:w-1/2 flex justify-center items-start mb-4 ">
           <Image
             src={imageUrl}
             width={400}

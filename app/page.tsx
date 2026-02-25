@@ -6,15 +6,15 @@ import { useInView } from "motion/react";
 import { useEffect, useRef } from "react";
 
 import Card from "@/components/Card";
-import Button from "@/components/UI/Button";
 import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
 
-  const ref = useRef(null);
-  const isInView = useInView(ref);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  // const isInView = useInView(ref, { margin: "200px 0px", once: false ,initial:true});
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ["pokemon"],
@@ -30,11 +30,27 @@ export default function Home() {
         return Number(next);
       },
     });
+
   useEffect(() => {
-    if (isInView) {
-      fetchNextPage();
-    }
-  }, [isInView, fetchNextPage]);
+    if (!loadMoreRef.current) return;
+    if (!hasNextPage) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      {
+        root: null,
+        threshold: 0,
+      },
+    );
+
+    observer.observe(loadMoreRef.current);
+
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
   const fetchData = data;
 
   return (
@@ -66,17 +82,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-10">
-        {hasNextPage && (
-          <Button
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}
-            ref={ref}
-          >
-            {isFetchingNextPage ? "Loading..." : "Loading..."}
-          </Button>
-        )}
-      </div>
+      {hasNextPage && (
+        <div ref={loadMoreRef} className="h-10 flex justify-center font-bold">
+          Loading...
+        </div>
+      )}
     </>
   );
 }

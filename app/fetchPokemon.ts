@@ -11,7 +11,8 @@ const delayedFetch = async (
 };
 
 async function fetchPokemon({ pageParam = 0 }: { pageParam: number }) {
-  const res = await delayedFetch(process.env.NEXT_PUBLIC_API_URL + "?limit=25&offset=" + pageParam,50);
+  // throw new Error('Something is Not Right.')
+  const res = await delayedFetch(process.env.NEXT_PUBLIC_API_URL + "?limit=25&offset=" + pageParam,0);
   if (!res.ok) {
     throw new Error("Data not Found");
   }
@@ -20,7 +21,7 @@ async function fetchPokemon({ pageParam = 0 }: { pageParam: number }) {
 }
 
 async function fetchPokemonById(id: string | undefined) {
-  const res = await delayedFetch(process.env.NEXT_PUBLIC_API_URL + "/" + id,1000);
+  const res = await delayedFetch(process.env.NEXT_PUBLIC_API_URL + "/" + id,0);
   if (!res.ok) {
     throw new Error("Data not Found");
   }

@@ -22,7 +22,6 @@ const Header: React.FC = () => {
   }, [search]);
 
   useEffect(() => {
-    console.log("API Call with:", debouncedValue);
     router.push(`/?search=${search}`);
   }, [debouncedValue]);
 

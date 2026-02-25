@@ -13,6 +13,7 @@ import Type from "@/components/UI/Type";
 import type { RootState, AppDispatch } from "@/app/store/store";
 import { add, remove } from "../store/features/favorite";
 import SkeletonSmallCard from "@/components/skeleton/SkeletonSmallCard";
+import ErrorHomePage from "../error";
 
 const Page: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,8 +26,6 @@ const Page: React.FC = () => {
     queryFn: () => fetchPokemonById(String(numericId)),
     enabled: !Number.isNaN(numericId),
   });
-
-
 
   const isFav = favorite.some((item) => item.id === numericId);
 
@@ -54,9 +53,12 @@ const Page: React.FC = () => {
     }
   }
 
+  if (isLoading) return <SkeletonSmallCard />;
+  if (isError || !data?.types) {
+    return <ErrorHomePage message="Pokemon Not Found" />;
+  }
   return (
     <>
-    {isLoading && <SkeletonSmallCard />}
       {data && (
         <>
           <h1 className="capitalize text-4xl font-semibold px-4 mt-4">

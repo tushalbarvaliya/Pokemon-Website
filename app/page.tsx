@@ -65,7 +65,7 @@ export default function Home() {
 
   return (
     <>
-      {isError && <ErrorHomePage />}
+      {isError && <ErrorHomePage message="Something Is Not Right."/>}
       {isLoading && (
         <>
           <div className="flex justify-center items-center p-4 mt-4">

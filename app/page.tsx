@@ -54,7 +54,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex justify-center items-center p-4">
+      <div className="flex justify-center items-center p-4 mt-4">
         <div className="loadPokemon grid grid-cols-5  gap-8">
           {search &&
             fetchData?.pages.map((page, pageIndex) =>

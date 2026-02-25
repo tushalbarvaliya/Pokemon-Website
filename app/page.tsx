@@ -2,19 +2,17 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchPokemon } from "./fetchPokemon";
-import { useInView } from "motion/react";
 import { useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 
 import Card from "@/components/Card";
-import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
-
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
-  // const isInView = useInView(ref, { margin: "200px 0px", once: false ,initial:true});
 
+  //call the api for data.
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ["pokemon"],
@@ -31,6 +29,7 @@ export default function Home() {
       },
     });
 
+  // use for infinity scroll.
   useEffect(() => {
     if (!loadMoreRef.current) return;
     if (!hasNextPage) return;
@@ -48,18 +47,18 @@ export default function Home() {
     );
 
     observer.observe(loadMoreRef.current);
-
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  // use to filter data based on search.
   const fetchData = data;
 
   return (
     <>
       <div className="flex justify-center items-center p-4">
         <div className="loadPokemon   grid grid-cols-5  gap-4">
-          {fetchData?.pages.map((page, pageIndex) =>
-            page.results.map((pokemon: { name: string }, index: number) => {
-              if (search) {
+          {search &&
+            fetchData?.pages.map((page, pageIndex) =>
+              page.results.map((pokemon: { name: string }, index: number) => {
                 if (pokemon.name.includes(search)) {
                   return (
                     <div key={`${pokemon.name}-${pageIndex}`}>
@@ -70,15 +69,18 @@ export default function Home() {
                     </div>
                   );
                 }
-              } else {
+              }),
+            )}
+          {!search &&
+            fetchData?.pages.map((page, pageIndex) =>
+              page.results.map((pokemon: { name: string }, index: number) => {
                 return (
                   <div key={`${pokemon.name}-${pageIndex}`}>
                     <Card id={pageIndex * 25 + index + 1} name={pokemon.name} />
                   </div>
                 );
-              }
-            }),
-          )}
+              }),
+            )}
         </div>
       </div>
 

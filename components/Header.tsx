@@ -16,9 +16,6 @@ const Header: React.FC = () => {
     e: React.FormEvent<HTMLFormElement>
   ) {
     e.preventDefault();
-
-    if (!search.trim()) return;
-
     router.push(`/?search=${search}`);
   }
 
@@ -44,10 +41,6 @@ const Header: React.FC = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-
-          <Button type="submit">
-            Search
-          </Button>
 
           <Link href="/favorite">
             <Button type="button">

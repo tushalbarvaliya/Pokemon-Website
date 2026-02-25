@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["counter"], // only persist this slice
+  whitelist: ["counter"], 
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -20,7 +20,7 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // REQUIRED for redux-persist
+      serializableCheck: false,
     }),
 });
 

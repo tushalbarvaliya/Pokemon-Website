@@ -15,9 +15,7 @@ import { add, remove } from "../store/features/favorite";
 const Page: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
-
   const favorite = useSelector((state: RootState) => state.counter.favorite);
-
   const numericId = Number(id);
 
   const { data } = useQuery({

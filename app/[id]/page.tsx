@@ -35,7 +35,9 @@ const Page: React.FC = () => {
 
     if (isFav) {
       dispatch(remove({ id: numericId }));
+
     } else {
+      
       dispatch(
         add({
           id: numericId,

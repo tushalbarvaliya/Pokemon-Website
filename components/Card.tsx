@@ -7,7 +7,7 @@ const Card = ({ id, name }: { id: string | number; name: string }) => {
   if(Number(id)>1025){
     return null;
   }
-  const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL_IMAGE}${id}.png`;
   if(!url){
     return null;
   }

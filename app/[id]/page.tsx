@@ -27,8 +27,8 @@ const Page: React.FC = () => {
   const isFav = favorite.some((item) => item.id === numericId);
 
   const heartSrc = isFav ? "/heart-fill.svg" : "/heart-outline.svg";
-
-  const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${numericId}.png`;
+  
+  const imageUrl = `${process.env.NEXT_PUBLIC_API_URL_IMAGE}${numericId}.png`;
 
   function handleFav() {
     if (!data) return;

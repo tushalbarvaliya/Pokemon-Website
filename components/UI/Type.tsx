@@ -24,7 +24,6 @@ const Type = ({ name }: { name: string }) => {
   };
   // bg-[${typeColor[name]}]
   const classes = ` px-4 py-2 font-semibold text-stone-50 capitalize`;
-
   return (
     <div className={classes} style={{ backgroundColor: typeColor[name] }}>
       {name}

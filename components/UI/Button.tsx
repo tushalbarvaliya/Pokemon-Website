@@ -5,12 +5,14 @@ const Button = ({
   onClick,
   disabled,
   ref,
+  type='button',
   ...props
 }: {
   children: string;
   onClick?: () => void;
   disabled?: boolean;
   ref?: Ref<HTMLButtonElement>;
+  type?: 'button'|'reset'|'submit';
 }) => {
   return (
     <button
@@ -18,6 +20,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       ref={ref}
+      type={type}
       {...props}
     >
       {children}

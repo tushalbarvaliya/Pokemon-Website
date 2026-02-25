@@ -1,13 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+type common = {
+  name: string;
+  url: string;
+};
+
+type sate = {
+  base_stat: string;
+  effort: string;
+  stat: common;
+};
+
+type types = {
+  slot: string;
+  type: common;
+};
+
 type fav = {
   id: number;
   name: string;
   image: string;
-  base_experience: unknown;
-  weight: unknown;
-  stats: unknown;
-  types: unknown;
+  base_experience: string;
+  weight: string;
+  stats: sate[];
+  types: types[];
 };
 
 interface CounterState {
@@ -23,15 +39,9 @@ const counterSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      const r: fav = {
-        id: action.payload.id,
-        name: action.payload.name,
-        image: action.payload.image,
-        base_experience: action.payload.base_experience,
-        weight: action.payload.weight,
-        stats: action.payload.stats,
-        types: action.payload.types,
-      };
+      const r: fav = action.payload;
+      console.log(action.payload);
+
       state.favorite = [r, ...state.favorite];
     },
     remove: (state, action) => {

@@ -9,18 +9,22 @@ const FavoritePage = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center p-4">
-        <div className="loadPokemon   grid grid-cols-5  gap-4">
-          {favorite &&
-            favorite.map((obj) => {
-              return <Card id={obj.id} name={obj.name} key={obj.id} />;
-            })}
-        </div>
-      </div>
       {favorite.length == 0 && (
-        <h1 className="text-center  font-bold text-4xl mt-10">
-          There is No Data in Favorite. Please Add One.
+        <h1 className="text-center capitalize mt-30 font-bold text-3xl">
+          No Data Found PLease Add One Pokemon to favorite
         </h1>
+      )}
+      {favorite.length > 0 && (
+        <>
+          <div className="flex justify-center items-center p-4">
+            <div className="loadPokemon   grid grid-cols-5  gap-4">
+              {favorite &&
+                favorite.map((obj) => {
+                  return <Card id={obj.id} name={obj.name} key={obj.id} />;
+                })}
+            </div>
+          </div>
+        </>
       )}
     </>
   );
